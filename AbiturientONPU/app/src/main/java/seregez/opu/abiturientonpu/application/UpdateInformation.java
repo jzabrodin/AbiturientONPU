@@ -68,7 +68,7 @@ public class UpdateInformation {
     public boolean updateData(Context context) throws IOException {
 
         dbHelper          = new DatabaseHelper(context);
-        String result     = null;
+        String result     ;
         boolean flag      = false;
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -94,7 +94,7 @@ public class UpdateInformation {
             try {
                 String idURL            =   String.format(URL, id);
                 MyRunnable myRunnable   =   new MyRunnable(idURL,false);
-                //result = createConnection(id, context);
+//                result = createConnection(id, context);
                 result                  =   myRunnable.execute().get();
 
                 if (result == null) {
@@ -133,6 +133,7 @@ public class UpdateInformation {
 
             ReadValuesFromDatabase(db);
             ReadValuesFromTableNews(context);
+
             flag    =   true;
 
         }
@@ -181,7 +182,7 @@ public class UpdateInformation {
             if (tag.equals("message")) {
                 cb.put(tag,vals.get(i));
                 cb.put("dataObnovleniya",lastUpdateDate);
-                long rowId = db.insert("news",null,cb);
+                db.insert("news",null,cb);
                 cb.clear();
             }
             i++;
@@ -194,13 +195,17 @@ public class UpdateInformation {
         i = 1;
         for (String tag : tags){
 
+            if(tag.equals("person") || tag.equals("message")){
+                continue;
+            }
+
             cb.put(tag,vals.get(i));
 
 
             if (tag.equals("originplace")) {
                 cb.put("dataObnovleniya",lastUpdateDate);
                 cb.put("studentID",id);
-                long rowId  =   db.insert("student",null,cb);
+                db.insert("student",null,cb);
                 cb.clear();
             }
 
@@ -270,11 +275,10 @@ public class UpdateInformation {
                 .append(id)
                 .append("and tab1.studentID = tab2.studentID");
 
-        String[] args                 =   null;
 
         Cursor c = null;
         try {
-            c = db.rawQuery(queryBuilder.toString(), args);
+            c = db.rawQuery(queryBuilder.toString(), null);
         } catch (SQLiteException e) {
             e.printStackTrace();
         }
@@ -311,7 +315,7 @@ public class UpdateInformation {
 
         SharedPreferences preferences   = PreferenceManager.getDefaultSharedPreferences(context);
         String lastUpdateDate           = preferences.getString (PreferencesActivity.LAST_UPDATE_DATE_PARAMETER,"");
-        String id                       = preferences.getString (PreferencesActivity.SAVED_ID_PARAMETER,"");
+//        String id                       = preferences.getString (PreferencesActivity.SAVED_ID_PARAMETER,"");
 
         //вспоогательный класс облегчающий работу с базами данных
         DatabaseHelper dbHelper       =   new DatabaseHelper(context);
@@ -323,30 +327,33 @@ public class UpdateInformation {
 
         StringBuilder queryBuilder    = new StringBuilder();
 
-        queryBuilder.append("SELECT * FROM news");
+        queryBuilder.append("SELECT * FROM news WHERE dataObnovleniya = ")
+                    .append(lastUpdateDate);
 
-        String[] args                 = null;
+//        String[] args                 = null;
         Cursor c                      = null;
 
         try {
-            c = db.rawQuery(queryBuilder.toString(), args);
+            c = db.rawQuery(queryBuilder.toString(), null);
         } catch (SQLiteException e) {
             e.printStackTrace();
         }
 
 
         try {
-            if (c.moveToFirst()) {
+            if (c != null) {
+                if (c.moveToFirst()) {
 
-                do {
+                    do {
 
-                    for (int i = 0; i < c.getColumnCount(); i++) {
-                        values.add(c.getString(i));
-                        elements.add(c.getColumnName(i));
-                    }
+                        for (int i = 0; i < c.getColumnCount(); i++) {
+                            values.add(c.getString(i));
+                            elements.add(c.getColumnName(i));
+                        }
 
-                } while (c.moveToNext());
-            }//c.move to first
+                    } while (c.moveToNext());
+                }//c.move to first
+            }
         } catch (NullPointerException e) {
             Toast.makeText(context,"Нет сохраненных записей",Toast.LENGTH_SHORT).show();
         }

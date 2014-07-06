@@ -16,11 +16,13 @@ import android.widget.Toast;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.text.ParseException;
 
 import seregez.opu.abiturientonpu.R;
 import seregez.opu.abiturientonpu.application.MainActivity;
 import seregez.opu.abiturientonpu.application.PreferencesActivity;
+import seregez.opu.abiturientonpu.application.UpdateInformation;
 
 
 public class UpdateService extends IntentService {
@@ -49,6 +51,9 @@ public class UpdateService extends IntentService {
         try {
             if (DateHelper.compareDateFromSettingsWithDateFromWeb(lastUpdateDate,serverDate)) {
 
+                UpdateInformation upd = new UpdateInformation(false);
+//                boolean flag          = upd.updateData(this);
+
                 PendingIntent pi    =   PendingIntent.getActivity(
                                                             this
                                                             ,0
@@ -71,6 +76,10 @@ public class UpdateService extends IntentService {
                 notificationManager.notify(0,notification);
             }
         } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

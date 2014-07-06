@@ -29,7 +29,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     DatabaseHelper dbHelper;
 
     //константы
-    private final String LOG_TAG                 = " === Settings Activity === ";
+//    private final String LOG_TAG                 = " === Settings Activity === ";
     public static  final String UPDATE_DATE_URL  = "http://ac.opu.ua/2014/xml/xml_vstup_onpu.php?mode=update";
 
 /*todo
@@ -39,7 +39,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
  */
     /**see com.seregez.xmlparser.app.service.UpdateDate#doInBackground(String...)*/
 
-    static String s = getSuperString();
+//    static String s = getSuperString();
 
 
     @Override
@@ -86,7 +86,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     private void checkConnectionAndServerDate() {
-        String statusMessage  =   "";
+        String statusMessage;
 
         try {
             MyRunnable myRunnable           = new MyRunnable(UPDATE_DATE_URL,true);
@@ -118,19 +118,32 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             makeToast("Подключение отсутствует. Повторите попытку позже.");
             return;
         }
+
         switch (view.getId()) {
             //запускает активити
             case R.id.buttonResults:
 
                 //ShowResult.updateXD();Эта штука не работает=(
-                ShowResult.fillXD();//Если дата и ид один  и тот же.
-                Intent intent = new Intent(this, ShowResult.class);
-                startActivity(intent);
-                break;
+                //ShowResult.fillXD();//Если дата и ид один  и тот же.
+                /*todo проверить заполняются ли массивы содержащие дельты */
+
+
+                if (ShowResult.department.size() == 0) {
+                    makeToast("Нет сохраненных данных.");
+                    break;
+                } else {
+                    Intent intent = new Intent(this, ShowResult.class);
+                    startActivity(intent);
+                    break;
+                }
 
             case R.id.buttonNotification:
-                Intent inten = new Intent(this, NewsActivity.class);
-                startActivity(inten);
+                if (ShowResult.info.size() == 0) {
+                    makeToast("Нет сохраненных новостей.");
+                } else {
+                    Intent inten = new Intent(this, NewsActivity.class);
+                    startActivity(inten);
+                }
                 break;
         }
     }

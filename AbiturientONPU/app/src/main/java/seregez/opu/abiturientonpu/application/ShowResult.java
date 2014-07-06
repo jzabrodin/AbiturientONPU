@@ -9,10 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +20,7 @@ import seregez.opu.abiturientonpu.service.MenuHelper;
 
 public class ShowResult extends ActionBarActivity {
 
-    private ListView    resultsList;
+    //private ListView    resultsList;
 
     //Забродин 19-06-2014----------
     //вдруг поменять скажут
@@ -140,9 +138,9 @@ public class ShowResult extends ActionBarActivity {
 
 
 
-    static public String[] toArr(ArrayList<String> s) {
-        return Arrays.copyOf(s.toArray(), s.size(), String[].class);
-    }
+//    static public String[] toArr(ArrayList<String> s) {
+//        return Arrays.copyOf(s.toArray(), s.size(), String[].class);
+//    }
 
     static public void updateArrays() {
         speciality.clear();
@@ -165,17 +163,17 @@ public class ShowResult extends ActionBarActivity {
         originplaceDX.clear();
     }
 
-    static void fillXD() {//todo Когда будет кнопка добавлений, то вызывать этот метод, перед updateXD
-        //zabrodin 01.07.14
-        updateXD();
-        //zabrodin 01.07.14
-        for (String aPlace : place) {
-            placeDX.add(aPlace);
-        }
-        for (String anOriginplace : originplace) {
-            originplaceDX.add(anOriginplace);
-        }
-    }
+//    static void fillXD() {//todo Когда будет кнопка добавлений, то вызывать этот метод, перед updateXD
+//        //zabrodin 01.07.14
+//        updateXD();
+//        //zabrodin 01.07.14
+//        for (String aPlace : place) {
+//            placeDX.add(aPlace);
+//        }
+//        for (String anOriginplace : originplace) {
+//            originplaceDX.add(anOriginplace);
+//        }
+//    }
 
     static void getData(ArrayList<String> element, ArrayList<String> value) {
 
@@ -237,6 +235,11 @@ public class ShowResult extends ActionBarActivity {
             } else if (s.equals("message")) {
                 ShowResult.info.add(value.get(i));
 
+            } //06-07-2014 JZabrodin
+              else if(s.equals("placeDx")) {
+                ShowResult.placeDX.add(value.get(i));
+            } else if(s.equals("originplaceDX")){
+                ShowResult.originplaceDX.add(value.get(i));
             }
         }//end of for
     }//end of getData
