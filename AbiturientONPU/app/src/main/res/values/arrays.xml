@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="array_of_time_variants_entries">
+        <item>15 мин.</item>
+        <item>1 час</item>
+        <item>3 часа</item>
+        <item>6 часов</item>
+    </string-array>
+
+    <string-array name="array_of_time_variants_values">
+        <item>15</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+    </string-array>
+</resources>

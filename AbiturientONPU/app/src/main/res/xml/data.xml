@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<abiturient>
+    <person>Іванов Іван Іванович</person>
+    <requests>
+        <request>
+            <department>ІКС</department>
+            <speciality>6.050201 Системна інженерія</speciality>
+            <qualification>Бакалавр</qualification>
+            <licence>110</licence>
+            <budget>50</budget>
+            <rating>763.5</rating>
+            <privilege>Вступ поза конкурсом</privilege>
+            <docstate>Подано оригінали</docstate>
+            <state>
+                <title>Рекомендовано до зарахування на бюджет</title>
+                <comment>Рекомендація діє до 11.08.2014</comment>
+            </state>
+            <place>15</place>
+            <originplace>2</originplace>
+        </request>
+        <request>
+            <department>ІБЕИТ</department>
+            <speciality>6.030502 Економічна кібернетика</speciality>
+            <qualification>Бакалавр</qualification>
+            <licence>80</licence>
+            <budget>8</budget>
+            <rating>700.5</rating>
+            <privilege>Вступ на загальних засадах</privilege>
+            <docstate>Подано копії</docstate>
+            <state>
+                <title>Рекомендовано до зарахування на контракт</title>
+                <comment>Рекомендація діє до 11.08.2014</comment>
+            </state>
+            <place>267</place>
+            <originplace>31</originplace>
+        </request>
+        <request>
+            <department>УНІ</department>
+            <speciality>6.030502 Економічна кібернетика</speciality>
+            <qualification>Бакалавр</qualification>
+            <licence>80</licence>
+            <budget>8</budget>
+            <rating>700.5</rating>
+            <privilege>Вступ на загальних засадах</privilege>
+            <docstate>Подано копії</docstate>
+            <state>
+                <title>Рекомендовано до зарахування на контракт</title>
+                <comment>Рекомендація діє до 11.08.2014</comment>
+            </state>
+            <place>267</place>
+            <originplace>31</originplace>
+        </request>
+        <request>
+            <department>ІДЗО</department>
+            <speciality>7.050201 Електромеханічні системи автоматизації та електропривод
+            </speciality>
+            <qualification>Спеціаліст</qualification>
+            <licence>120</licence>
+            <budget>20</budget>
+            <rating>363.5</rating>
+            <privilege>Вступ на загальних засадах</privilege>
+            <docstate>Подано довідку</docstate>
+            <state>
+                <title>Рекомендовано до зарахування на бюджет</title>
+                <comment>Рекомендація діє до 05.08.2014</comment>
+            </state>
+            <place>25</place>
+            <originplace>12</originplace>
+        </request>
+    </requests>
+</abiturient>

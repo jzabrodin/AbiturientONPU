@@ -1,0 +1,34 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 16
+    buildToolsVersion "20.0.0"
+
+    signingConfigs{
+        release{
+            storeFile file('mykeystore.jks')
+            storePassword "ih8tsch00l"
+            keyAlias "n1mr0d"
+            keyPassword "ih8tsch00l"
+        }
+    }
+
+    defaultConfig {
+        applicationId "seregez.opu.abiturientonpu"
+        minSdkVersion 11
+        targetSdkVersion 16
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:19.+'
+}

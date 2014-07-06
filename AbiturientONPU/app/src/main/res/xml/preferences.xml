@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:title="@string/enterIdPreference"
+        android:key="pref_savedID"
+        android:inputType="number"/>
+
+    <PreferenceCategory
+        android:title="Настройки автообновления">
+
+    <CheckBoxPreference
+        android:title="@string/autoUpdateStatus"
+        android:defaultValue="false"
+        android:key="pref_autoUpdate"/>
+    <CheckBoxPreference
+        android:title="@string/wifi_description"
+        android:defaultValue="false"
+        android:key="pref_onlyWifi"/>
+    <ListPreference
+        android:title="@string/refreshSettings"
+        android:entries="@array/array_of_time_variants_entries"
+        android:entryValues="@array/array_of_time_variants_values"
+        android:defaultValue="30"
+        android:key="pref_timerPreference"/>
+    </PreferenceCategory>
+
+    <EditTextPreference
+        android:key="pref_lastUpdateDate"
+        android:editable="false"
+        android:visibility="invisible"
+        android:selectable="false"/>
+
+    <EditTextPreference
+        android:key="pref_prevUpdateDate"
+        android:editable="false"
+        android:visibility="invisible"
+        android:selectable="false"/>
+
+
+</PreferenceScreen>

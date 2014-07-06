@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBarDownload"
+        android:layout_marginTop="39dp"
+        android:layout_below="@+id/editTextID"
+        android:max="1000"
+        android:progress="1"
+        android:indeterminate="false"
+        android:layout_alignRight="@+id/editTextID"
+        android:minWidth="210dp"
+            />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/editTextID"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBox"
+        android:layout_below="@+id/progressBarDownload"
+        android:layout_alignLeft="@+id/progressBarDownload"
+        android:layout_marginTop="30dp"
+        android:checked="false"
+        android:text="@string/checkbox_custom_dialog"
+        android:layout_alignRight="@+id/progressBarDownload" />
+</RelativeLayout>

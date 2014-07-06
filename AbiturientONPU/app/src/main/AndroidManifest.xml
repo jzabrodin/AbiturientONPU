@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="seregez.opu.abiturientonpu"
+    android:versionCode="2"
+    android:versionName="kavabanga">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
+
+    <uses-sdk
+        android:maxSdkVersion="22"
+        android:minSdkVersion="11"
+        android:targetSdkVersion="16" />
+
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.AppCompat.Light">
+
+        <activity
+            android:name=".application.MainActivity"
+            android:label="@string/app_name">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+        <activity
+            android:name=".application.NewsActivity"
+            android:label="@string/title_activity_notification"
+            android:parentActivityName=".application.NewsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".application.MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".application.PreferencesActivity"
+            android:label="@string/title_activity_preferences"
+            android:parentActivityName=".application.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".application.MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".application.ShowFullResult"
+            android:label="@string/title_activity_results_viewer"
+            android:parentActivityName=".application.ShowResult">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".application.ShowResult" />
+        </activity>
+
+
+        <activity
+            android:name=".application.ShowResult"
+            android:label="@string/title_activity_full_results"
+            android:parentActivityName=".application.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".application.MainActivity" />
+        </activity>
+
+        <service
+            android:name=".service.UpdateService"
+            android:exported="false"/>
+
+    </application>
+
+</manifest>

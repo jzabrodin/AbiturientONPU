@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background">#Cccc</color>
+    <color name="background_for_ex_list_parent">#808080</color>
+    <color name="text_color">#FF000000</color>
+</resources>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Абитуриент ОНПУ</string>
+    <string name="action_settings">Параметры</string>
+
+
+    <string name="title_activity_main"          >Абитуриент ОНПУ</string>
+    <string name="title_activity_notification"  >Новости</string>
+    <string name="title_information"            >Информация</string>
+    <string name="title_main_activity"          >Вход</string>
+    <string name="title_activity_results_viewer">Результаты</string>
+    <string name="title_activity_full_results"  >Детальные результаты</string>
+
+
+    <string name="navigation_drawer_open" >Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example"         >Example action</string>
+
+    <string name="connection_error"        >Нет подключения к сети.</string>
+    <string name="refreshData"             >Обновить</string>
+    <string name="Speciality"              >Специальность: </string>
+    <string name="Grade"                   >Степень: </string>
+    <string name="Avalaible"               >Доступно мест: </string>
+    <string name="Budget"                  >Из них бюджетных: </string>
+    <string name="YourRatio"               >Ваш рейтинг: </string>
+    <string name="Privilegies"             >Привилегии: </string>
+    <string name="docstate"                >Empty</string>
+    <string name="Recommends"              >Рекомендовано до зарахування на бюджет</string>
+    <string name="RecommendDateAvalaible"  >Рекомендация дие до …</string>
+    <string name="PlaceInList"             >Место в списке: </string>
+    <string name="PlaceInListWithOriginals">Место по поданным оригиналам: </string>
+    <string name="Abiturient"              >Абитуриент: </string>
+
+    <string name="URL"                    >http://ac.opu.ua/2014/xml/xml_vstup_onpu.php&amp;id=</string>
+    <string name="title_activity_settings">Настройки</string>
+
+
+    <string name="dialog_confirm_title"   >Продолжить?</string>
+    <string name="dialog_confirm_yes"     >Настройки Wi-Fi</string>
+    <string name="dialog_confirm_no"      >Отмена</string>
+    <string name="checkbox_custom_dialog" >Сохранить ID</string>
+    <string name="custom_dialog_positive" >Продолжить</string>
+    <string name="custom_dialog_negative" >Выйти</string>
+
+    <string name="remember_me_checkbox">Показывать экран настроек при запуске</string>
+    <string name="refreshSettings"     >Период обновления</string>
+    <string name="wifi_description"    >Подключение через Wi-Fi</string>
+    <string name="savedID"             >Сохраненный ID</string>
+    <string name="saveSettings"        >Сохранить</string>
+    <string name="autoUpdateStatus"    >Автообновление</string>
+
+    <string name="placesQuantity">Количество мест: </string>
+    <string name="studentsRating">Рейтинг: </string>
+    <string name="license"       >Лицензия : </string>
+    <string name="budget_places" >Бюджетных :</string>
+    <string name="common_rating" >Позиция в рейтинге : </string>
+    <string name="original_rating">Позиция по оригиналам : </string>
+
+
+
+    <string name="showResults">Мои результаты</string>
+    <string name="showNews"   >Мои новости</string>
+    <string name="action_news">Новости</string>
+
+
+    <string name="lastUpdateDate"            >Дата обновления</string>
+    <string name="enterIdPreference"         >Личное дело    </string>
+    <string name="title_activity_preferences">Настройки</string>
+    <string name="welcome_to_program"        >Для дальнейшего использования необходимо заполнить настройки, обязательным является номер личного дела.</string>
+    <string name="dialog_continue"           >Продолжить</string>
+
+</resources>
