@@ -13,10 +13,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.concurrent.ExecutionException;
 
 import seregez.opu.abiturientonpu.R;
 import seregez.opu.abiturientonpu.service.DatabaseHelper;
+import seregez.opu.abiturientonpu.service.DateHelper;
 import seregez.opu.abiturientonpu.service.MenuHelper;
 import seregez.opu.abiturientonpu.service.MyRunnable;
 
@@ -40,7 +42,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     /**see com.seregez.xmlparser.app.service.UpdateDate#doInBackground(String...)*/
 
 //    static String s = getSuperString();
-
+    String savedId;
+    String lastUpdateDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +52,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         sharedPreferences     = PreferenceManager.getDefaultSharedPreferences(this);
-
-        String savedId        = sharedPreferences.getString(PreferencesActivity.SAVED_ID_PARAMETER        ,"");
-        String lastUpdateDate = sharedPreferences.getString(PreferencesActivity.LAST_UPDATE_DATE_PARAMETER,"");
+        savedId               = sharedPreferences.getString(PreferencesActivity.SAVED_ID_PARAMETER        ,"");
+        lastUpdateDate        = sharedPreferences.getString(PreferencesActivity.LAST_UPDATE_DATE_PARAMETER,"");
 
         if (savedId.length() == 0){
             Intent settings = new Intent(this,PreferencesActivity.class);
@@ -60,15 +62,17 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             /*todo придумасть способ обновлять макет после возврата из настроек */
         }
 
-        dbHelper         = new DatabaseHelper(this);
 
-        TextView savedIdTV = (TextView) findViewById(R.id.pref_savedID);
+
+        TextView savedIdTV        = (TextView) findViewById(R.id.pref_savedID);
         TextView lastUpdateDateTV = (TextView) findViewById(R.id.pref_lastUpdateDate);
-        TextView pref_autoUpdate = (TextView) findViewById(R.id.pref_autoUpdate);
+        TextView pref_autoUpdate  = (TextView) findViewById(R.id.pref_autoUpdate);
+
+
+        refreshParameters(savedIdTV, lastUpdateDateTV, pref_autoUpdate);
 
         Button resultsBtn = (Button) findViewById(R.id.buttonResults);
         Button notificationBtn = (Button) findViewById(R.id.buttonNotification);
-
 
         resultsBtn.setOnClickListener(this);
         notificationBtn.setOnClickListener(this);
@@ -76,26 +80,55 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         dbHelper = new DatabaseHelper(this);
 
-        lastUpdateDateTV.setText(lastUpdateDate);
-
         checkConnectionAndServerDate();
-        boolean flag = sharedPreferences.getBoolean(PreferencesActivity.AUTO_UPDATE_PARAMETER,false);
-        pref_autoUpdate.setText(flag ? " включено" : " отключено");
-
 
     }
 
+    private void refreshParameters(TextView savedIdTV, TextView lastUpdateDateTV, TextView pref_autoUpdate) {
+        boolean flag = sharedPreferences.getBoolean(PreferencesActivity.AUTO_UPDATE_PARAMETER,false);
+        lastUpdateDateTV.setText(lastUpdateDate);
+        pref_autoUpdate.setText(flag ? " включено" : " отключено");
+        savedIdTV.setText(savedId);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sharedPreferences     = PreferenceManager.getDefaultSharedPreferences(this);
+        savedId               = sharedPreferences.getString(PreferencesActivity.SAVED_ID_PARAMETER        ,"");
+        lastUpdateDate        = sharedPreferences.getString(PreferencesActivity.LAST_UPDATE_DATE_PARAMETER,"");
+
+        if (savedId.length() == 0){
+            Intent settings = new Intent(this,PreferencesActivity.class);
+            settings.putExtra("first_launch", true);
+            startActivity(settings);
+            /*todo придумасть способ обновлять макет после возврата из настроек */
+        }
+
+        TextView savedIdTV        = (TextView) findViewById(R.id.pref_savedID);
+        TextView lastUpdateDateTV = (TextView) findViewById(R.id.pref_lastUpdateDate);
+        TextView pref_autoUpdate  = (TextView) findViewById(R.id.pref_autoUpdate);
+
+
+        refreshParameters(savedIdTV, lastUpdateDateTV, pref_autoUpdate);
+    }
+
     private void checkConnectionAndServerDate() {
-        String statusMessage;
+
+        String statusMessage = null;
 
         try {
             MyRunnable myRunnable           = new MyRunnable(UPDATE_DATE_URL,true);
-            statusMessage = myRunnable.execute().get() != null?"Доступны обновления!":"Нет подключения";
-            offlineMode   = !statusMessage.equals("Доступны обновления!");
+            String     serverDate           = myRunnable.execute().get();
+            lastUpdateDate = sharedPreferences.getString(PreferencesActivity.LAST_UPDATE_DATE_PARAMETER,"");
+            statusMessage  = serverDate!= null?"Доступны обновления!":"Нет подключения";
+            offlineMode    = !DateHelper.compareDateFromSettingsWithDateFromWeb(lastUpdateDate,serverDate);
         } catch (InterruptedException e) {
             statusMessage = "Нет подключения!";
         } catch (ExecutionException e) {
             statusMessage = "Нет подключения!";
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
 
         makeToast(statusMessage);

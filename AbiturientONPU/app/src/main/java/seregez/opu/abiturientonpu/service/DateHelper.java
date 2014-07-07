@@ -22,11 +22,15 @@ public class DateHelper {
 
     }
 
-    public static boolean compareDateFromSettingsWithDateFromWeb(String updateTime,String uploadedDate) throws ParseException {
+    public static boolean compareDateFromSettingsWithDateFromWeb(String lastUpdateDate,String serverDate) throws ParseException {
+
+        if (lastUpdateDate == null || serverDate == null) {
+            return false;
+        }
 
         try {
-            Date   parsedDate   = parseStringToDate(uploadedDate);
-            Date   settingsDate = parseStringToDate(updateTime);
+            Date   parsedDate   = parseStringToDate(serverDate);
+            Date   settingsDate = parseStringToDate(lastUpdateDate);
             long   parsedDateMillis   = parsedDate.getTime();
             long   settingsDateMillis = settingsDate.getTime();
             return parsedDateMillis > settingsDateMillis;

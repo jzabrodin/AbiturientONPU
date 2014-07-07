@@ -261,20 +261,20 @@ public class UpdateInformation {
                 .append("FROM\n")
                 .append("\tstudent as tab1, student as tab2\n")
                 .append("WHERE")
-                .append("tab1.dataObnovleniya=")
+                .append(" tab1.dataObnovleniya=")
                 .append("\"")
                 .append(prevUpdateDate)
                 .append("\" AND")
-                .append("tab2.dataObnovleniya=")
+                .append(" tab2.dataObnovleniya=")
                 .append("\"")
                 .append(lastUpdateDate)
-                .append("\"")
-                .append("tab1.department\t\t= tab2.department\t  AND\n")
+                .append("\" AND")
+                .append(" tab1.department\t\t= tab2.department\t  AND\n")
                 .append("\ttab1.speciality\t\t= tab2.speciality\t\t  AND\n")
                 .append("\ttab1.qualification\t\t= tab2.qualification\t  AND")
-                .append("and tab1.studentID = ")
+                .append(" tab1.studentID = ")
                 .append(id)
-                .append("and tab1.studentID = tab2.studentID");
+                .append(" and tab1.studentID = tab2.studentID");
 
 
         Cursor c = null;
