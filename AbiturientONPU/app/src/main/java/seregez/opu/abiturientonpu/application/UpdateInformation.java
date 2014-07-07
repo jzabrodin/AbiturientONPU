@@ -244,11 +244,9 @@ public class UpdateInformation {
 
     private void ReadValuesFromDatabase(SQLiteDatabase db) {
 
-        //это короче вроде костыля
         ArrayList<String> values   =   new ArrayList<String>();
         ArrayList<String> elements =   new ArrayList<String>();
 
-        //переделать чтобы учитывал
         StringBuilder queryBuilder = new StringBuilder();
         queryBuilder
                 .append("SELECT")

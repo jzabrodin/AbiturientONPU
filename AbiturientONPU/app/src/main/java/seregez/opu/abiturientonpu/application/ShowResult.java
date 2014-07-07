@@ -123,6 +123,8 @@ public class ShowResult extends ActionBarActivity {
                 return false;
             }
         });
+
+        //fillXD();
     }
 
     private void pushToCollection(int id, int dx) {
@@ -156,12 +158,13 @@ public class ShowResult extends ActionBarActivity {
         docstate.clear();
         title.clear();
         comment.clear();
-    }
-
-    static public void updateXD() {
         placeDX.clear();
         originplaceDX.clear();
     }
+
+//    static public void updateXD() {
+//
+//    }
 
 //    static void fillXD() {//todo Когда будет кнопка добавлений, то вызывать этот метод, перед updateXD
 //        //zabrodin 01.07.14
@@ -238,7 +241,7 @@ public class ShowResult extends ActionBarActivity {
             } //06-07-2014 JZabrodin
               else if(s.equals("placeDx")) {
                 ShowResult.placeDX.add(value.get(i));
-            } else if(s.equals("originplaceDX")){
+            } else if(s.equals("originplaceDx")){
                 ShowResult.originplaceDX.add(value.get(i));
             }
         }//end of for

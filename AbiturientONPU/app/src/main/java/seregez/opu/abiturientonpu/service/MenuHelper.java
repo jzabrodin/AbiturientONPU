@@ -13,6 +13,7 @@ import java.util.concurrent.ExecutionException;
 import seregez.opu.abiturientonpu.R;
 import seregez.opu.abiturientonpu.application.NewsActivity;
 import seregez.opu.abiturientonpu.application.PreferencesActivity;
+import seregez.opu.abiturientonpu.application.ShowResult;
 import seregez.opu.abiturientonpu.application.UpdateInformation;
 
 /**
@@ -66,28 +67,32 @@ public class MenuHelper {
 
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
         boolean     onlyWifiMode        = preferences.getBoolean(ONLY_WIFI_MODE_PREFERENCE, false);
-        lastUpdateDate                  = preferences.getString (LAST_UPDATE_DATE_PARAM, "25.06.2014 20:41:45");
+        lastUpdateDate                  = preferences.getString (LAST_UPDATE_DATE_PARAM, "");
         MyRunnable  myRunnable          = new MyRunnable(UPDATE_DATE_URL,true);
         String      serverDate          = myRunnable.execute().get();
 
-        WifiManager wifiManager         = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
-        boolean     wifi                = wifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLED;
-
-        if ( wifi && onlyWifiMode && serverDate != null){
-            updateDatabase(context,serverDate);
-
-        } else  if ( !wifi  && onlyWifiMode && serverDate != null){
-
-            showToast(context, "Используем только Wi-Fi подключение, включите Wi-Fi и повторите попытку.");
-
-        } else if (serverDate == null){
-
-            showToast(context,"Нет подключения к сети!");
-
+        if (serverDate.equals(lastUpdateDate)){
+            Toast.makeText(context,"Нет обновлений!", Toast.LENGTH_SHORT);
         } else {
-            updateDatabase(context,serverDate);
-        }
 
+            WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+            boolean wifi = wifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLED;
+
+            if (wifi && onlyWifiMode && serverDate != null) {
+                updateDatabase(context, serverDate);
+
+            } else if (!wifi && onlyWifiMode && serverDate != null) {
+
+                showToast(context, "Используем только Wi-Fi подключение, включите Wi-Fi и повторите попытку.");
+
+            } else if (serverDate == null) {
+
+                showToast(context, "Нет подключения к сети!");
+
+            } else {
+                updateDatabase(context, serverDate);
+            }
+        }
     } // networkInfo.isConnected
 
     private void updateDatabase(Context context,String serverDate) throws IOException, ExecutionException, InterruptedException {
@@ -99,6 +104,7 @@ public class MenuHelper {
             showToast(context,"Нет обновлений :( ");
         } else {
             showToast(context,"Подключение установлено!");
+            ShowResult.updateArrays();
             UpdateInformation upd   =   new UpdateInformation(flag);
             upd.updateData(context);
         }
