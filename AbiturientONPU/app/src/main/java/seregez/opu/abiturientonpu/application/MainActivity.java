@@ -140,11 +140,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         ShowResult.updateArrays();
         checkConnectionAndServerDate();
 
-        if (offlineMode){
-            makeToast("Подключение отсутствует. Повторите попытку позже.");
-            return;
-        }
-
         switch (view.getId()) {
             //запускает активити
             case R.id.buttonResults:

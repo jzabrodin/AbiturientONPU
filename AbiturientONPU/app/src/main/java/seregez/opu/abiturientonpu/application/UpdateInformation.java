@@ -162,7 +162,7 @@ public class UpdateInformation {
         boolean flag = true;
 
         try {
-            flag = db.rawQuery("SELECT * FROM abiturient WHERE id = ?"
+            flag = db.rawQuery("SELECT * FROM abiturient WHERE studId = ?"
                      ,new String[]{id}).getCount() == 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -195,7 +195,7 @@ public class UpdateInformation {
             String tag   = tags.get(i);
             String value = vals.get(i);
 
-            if(tag.equals("person") || tag.equals("message")){
+            if(tag.equals("person")){
                 continue;
             }
 

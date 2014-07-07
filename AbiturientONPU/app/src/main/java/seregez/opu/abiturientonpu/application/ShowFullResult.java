@@ -130,7 +130,7 @@ public class ShowFullResult extends ActionBarActivity {
         String dx;
         String dy;
         if (!ShowResult.placeDX.isEmpty()) {
-            //*todo здесь почему-то вылетает массивы placeDX и originplaceDX задаются в классе UpdateInformation
+
             num1 = Integer.parseInt(ShowResult.placeDX.get(n));
                     //- Integer.parseInt(ShowResult.place.get(n));
             num2 = Integer.parseInt(ShowResult.originplaceDX.get(n));

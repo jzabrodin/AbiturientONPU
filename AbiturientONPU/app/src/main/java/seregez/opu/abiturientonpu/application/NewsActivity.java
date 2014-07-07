@@ -55,7 +55,7 @@ public class NewsActivity extends ActionBarActivity{
         map = new HashMap<Integer, ArrayList<String>>();
 
         for (int i = 0; i < ShowResult.info.size(); i++) {
-            map.put(1, ShowResult.info);
+            map.put(i, ShowResult.info);
         }
 
         resultsList = (ListView) findViewById(R.id.results);
