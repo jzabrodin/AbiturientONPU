@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import seregez.opu.abiturientonpu.service.DatabaseHelper;
+import seregez.opu.abiturientonpu.service.DateHelper;
 import seregez.opu.abiturientonpu.service.MyRunnable;
 
 /**
@@ -65,7 +66,7 @@ public class UpdateInformation {
 //    }
 
 
-    public boolean updateData(Context context) throws IOException {
+    public boolean updateData(Context context) {
 
         dbHelper          = new DatabaseHelper(context);
         String result     ;
@@ -76,6 +77,14 @@ public class UpdateInformation {
         lastUpdateDate    = preferences.getString(PreferencesActivity.LAST_UPDATE_DATE_PARAMETER, "");
         prevUpdateDate    = preferences.getString(PreferencesActivity.PREV_UPDATE_DATE_PARAMETER,"");
         id                = preferences.getString(PreferencesActivity.SAVED_ID_PARAMETER,"");
+
+        try {
+            commitLastUpdateDate();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         //SaxLister sax1 = new SaxLister();
         // Тут мы парсим дату. Сравниваем. Делаем выводы.
@@ -113,9 +122,14 @@ public class UpdateInformation {
                     sax.gogo(result);// offline mode On
 
                     /* вклиниваюсь здесь для перехвата данных и записи в бд*/
-                    fillDatabase(sax, db);
+
+                    try {
+                        fillDatabase(sax, db);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                     ReadValuesFromDatabase(db);
-                    ReadValuesFromTableNews(context);
                     db.close();
                     /*прекращаю*/
                     flag = true;
@@ -132,8 +146,6 @@ public class UpdateInformation {
         } else {
 
             ReadValuesFromDatabase(db);
-            ReadValuesFromTableNews(context);
-
             flag    =   true;
 
         }
@@ -147,8 +159,6 @@ public class UpdateInformation {
         ArrayList<String> tags  =   sax.getElement();
         ArrayList<String> vals  =   sax.getValue();
 
-        Log.d(LOG_TAG, dbHelper.getWritableDatabase().toString());
-        commitLastUpdateDate();
         boolean flag = true;
 
         try {
@@ -167,7 +177,7 @@ public class UpdateInformation {
         if (flag) {
             cb.put("fio"            , vals.get(0));
             cb.put("dataObnovleniya", lastUpdateDate);
-            cb.put("studentId"      , id);
+            cb.put("studId"      , id);
 
             long rowid      =   db.insert("abiturient",null,cb);
 
@@ -176,31 +186,30 @@ public class UpdateInformation {
             cb.clear();
         }
 
-        //таблица новости
-        int i = 0;
-        for (String tag : tags){
-            if (tag.equals("message")) {
-                cb.put(tag,vals.get(i));
-                cb.put("dataObnovleniya",lastUpdateDate);
-                db.insert("news",null,cb);
-                cb.clear();
-            }
-            i++;
-        }
-
-
 
         //таблица студент
         //vals.get(0) - ФИО студента
-        i = 1;
-        for (String tag : tags){
+
+        for (int i = 0; i < vals.size();i++){
+
+            String tag   = tags.get(i);
+            String value = vals.get(i);
 
             if(tag.equals("person") || tag.equals("message")){
-                i++;
                 continue;
             }
 
-            cb.put(tag,vals.get(i));
+            //таблица новости
+            if (tag.equals("message")) {
+                cb.put(tag,value);
+                cb.put("dataObnovleniya",lastUpdateDate);
+                db.insert("news",null,cb);
+                cb.clear();
+                continue;
+            }
+
+            //таблица абитуриент
+            cb.put(tag,value);
 
 
             if (tag.equals("originplace")) {
@@ -210,20 +219,23 @@ public class UpdateInformation {
                 cb.clear();
             }
 
-            i++;
-
         }
 
     }
 
     private void commitLastUpdateDate() throws ExecutionException, InterruptedException {
         String serverDate       =   new MyRunnable(UPDATE_DATE_URL,true).execute().get();
-        if (serverDate != null) {
+
+        if(serverDate != null && lastUpdateDate.equals(DateHelper.getDefaultDate())){
+            lastUpdateDate          =   serverDate;
+            commitStringPreference(PreferencesActivity.LAST_UPDATE_DATE_PARAMETER,lastUpdateDate);
+        } else if (serverDate != null) {
             prevUpdateDate          =   lastUpdateDate;
             lastUpdateDate          =   serverDate;
             commitStringPreference(PreferencesActivity.LAST_UPDATE_DATE_PARAMETER,lastUpdateDate);
             commitStringPreference(PreferencesActivity.PREV_UPDATE_DATE_PARAMETER,prevUpdateDate);
         }
+
     }
 
     private void commitStringPreference(String name, String value) {
@@ -263,7 +275,7 @@ public class UpdateInformation {
                 .append("WHERE")
                 .append(" tab1.dataObnovleniya=")
                 .append("\"")
-                .append(prevUpdateDate)
+                .append(prevUpdateDate.equals("")?lastUpdateDate:prevUpdateDate)
                 .append("\" AND")
                 .append(" tab2.dataObnovleniya=")
                 .append("\"")
@@ -311,8 +323,8 @@ public class UpdateInformation {
 
     }
 
-    //пока в методе нет нужды
-    public static void ReadValuesFromTableNews(Context context){
+
+    public void ReadValuesFromTableNews(Context context){
 
         SharedPreferences preferences   = PreferenceManager.getDefaultSharedPreferences(context);
         String lastUpdateDate           = preferences.getString (PreferencesActivity.LAST_UPDATE_DATE_PARAMETER,"");
@@ -329,7 +341,9 @@ public class UpdateInformation {
         StringBuilder queryBuilder    = new StringBuilder();
 
         queryBuilder.append("SELECT * FROM news WHERE dataObnovleniya = ")
-                    .append(lastUpdateDate);
+                .append("\"")
+                .append(lastUpdateDate)
+                .append("\"");
 
 //        String[] args                 = null;
         Cursor c                      = null;

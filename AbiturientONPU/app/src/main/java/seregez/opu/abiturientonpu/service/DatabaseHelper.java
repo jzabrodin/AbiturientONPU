@@ -13,7 +13,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     final public String LOG_TAG = "=== database helper ===";
 
     public DatabaseHelper(Context context) {
-        super(context, "superBase", null, 1);
+        super(context, "information", null, 1);
     }
 
     @Override

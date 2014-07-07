@@ -24,8 +24,8 @@ public class DateHelper {
 
     public static boolean compareDateFromSettingsWithDateFromWeb(String lastUpdateDate,String serverDate) throws ParseException {
 
-        if (lastUpdateDate == null || serverDate == null) {
-            return false;
+        if (serverDate == null || lastUpdateDate == "") {
+            return true;
         }
 
         try {
@@ -33,13 +33,17 @@ public class DateHelper {
             Date   settingsDate = parseStringToDate(lastUpdateDate);
             long   parsedDateMillis   = parsedDate.getTime();
             long   settingsDateMillis = settingsDate.getTime();
-            return parsedDateMillis > settingsDateMillis;
+            return !(parsedDateMillis > settingsDateMillis);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        return false;
+        return true;
 
+    }
+
+    public static String getDefaultDate(){
+        return "01.01.2014 00:00:00";
     }
 
 }

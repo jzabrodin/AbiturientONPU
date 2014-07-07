@@ -122,7 +122,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             String     serverDate           = myRunnable.execute().get();
             lastUpdateDate = sharedPreferences.getString(PreferencesActivity.LAST_UPDATE_DATE_PARAMETER,"");
             statusMessage  = serverDate!= null?"Доступны обновления!":"Нет подключения";
-            offlineMode    = !DateHelper.compareDateFromSettingsWithDateFromWeb(lastUpdateDate,serverDate);
+            offlineMode    = DateHelper.compareDateFromSettingsWithDateFromWeb(lastUpdateDate,serverDate);
         } catch (InterruptedException e) {
             statusMessage = "Нет подключения!";
         } catch (ExecutionException e) {
@@ -137,17 +137,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
 
-        boolean flag = false;
         ShowResult.updateArrays();
         checkConnectionAndServerDate();
 
-        try {
-            UpdateInformation upd = new UpdateInformation(offlineMode);
-            flag                  = upd.updateData(this);//запилить норм ид.todo
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (!flag){
+        if (offlineMode){
             makeToast("Подключение отсутствует. Повторите попытку позже.");
             return;
         }
@@ -160,24 +153,54 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 //ShowResult.fillXD();//Если дата и ид один  и тот же.
                 /*todo проверить заполняются ли массивы содержащие дельты */
 
+                try {
+                    UpdateInformation upd = new UpdateInformation(offlineMode);
+                    upd.updateData(this);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
 
                 if (ShowResult.department.size() == 0) {
+
                     makeToast("Нет сохраненных данных.");
                     break;
+
                 } else {
+
                     Intent intent = new Intent(this, ShowResult.class);
                     startActivity(intent);
                     break;
+
                 }
 
             case R.id.buttonNotification:
+
+
+                try {
+
+                    UpdateInformation upd   =   new UpdateInformation(offlineMode);
+                    upd.ReadValuesFromTableNews(this);//запилить норм ид.todo
+
+                } catch (IOException e) {
+
+                    e.printStackTrace();
+
+                }
+
                 if (ShowResult.info.size() == 0) {
+
                     makeToast("Нет сохраненных новостей.");
+
                 } else {
+
                     Intent inten = new Intent(this, NewsActivity.class);
                     startActivity(inten);
+
                 }
+
                 break;
+
         }
     }
 

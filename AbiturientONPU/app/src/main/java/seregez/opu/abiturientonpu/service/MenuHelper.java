@@ -84,13 +84,13 @@ public class MenuHelper {
 
             showToast(context,"Нет подключения к сети!");
 
-        } else if (serverDate != null){
+        } else {
             updateDatabase(context,serverDate);
         }
 
     } // networkInfo.isConnected
 
-    private void updateDatabase(Context context,String serverDate) throws IOException {
+    private void updateDatabase(Context context,String serverDate) throws IOException, ExecutionException, InterruptedException {
 
 
         /*todo это делать при запуске надо*/
@@ -98,8 +98,6 @@ public class MenuHelper {
         if (flag) {
             showToast(context,"Нет обновлений :( ");
         } else {
-            preferences.edit().putString(PreferencesActivity.LAST_UPDATE_DATE_PARAMETER,serverDate).commit();
-            preferences.edit().putString(PreferencesActivity.PREV_UPDATE_DATE_PARAMETER,lastUpdateDate).commit();
             showToast(context,"Подключение установлено!");
             UpdateInformation upd   =   new UpdateInformation(flag);
             upd.updateData(context);

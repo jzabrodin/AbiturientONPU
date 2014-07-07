@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
@@ -18,9 +17,8 @@ import android.text.style.TextAppearanceSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+
 import seregez.opu.abiturientonpu.R;
-
-
 import seregez.opu.abiturientonpu.service.MenuHelper;
 
 /*
@@ -80,10 +78,6 @@ public class ShowFullResult extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        String idPreference = PreferenceManager.
-                getDefaultSharedPreferences(getBaseContext()).getString("idPreference", "55555");
-
-
         int id = item.getItemId();
         //нужно задать контекст и ид
         MenuHelper menuHelper = new MenuHelper();
@@ -136,8 +130,9 @@ public class ShowFullResult extends ActionBarActivity {
         String dx;
         String dy;
         if (!ShowResult.placeDX.isEmpty()) {
-            num1 = Integer.parseInt(ShowResult.placeDX.get(n)) - Integer.parseInt(ShowResult.place.get(n));
-            num2 = Integer.parseInt(ShowResult.originplaceDX.get(n)) - Integer.parseInt(ShowResult.originplace.get(n));
+            //*todo здесь почему-то вылетает массивы placeDX и originplaceDX задаются в классе UpdateInformation
+//            num1 = Integer.parseInt(ShowResult.placeDX.get(n)) - Integer.parseInt(ShowResult.place.get(n));
+//            num2 = Integer.parseInt(ShowResult.originplaceDX.get(n)) - Integer.parseInt(ShowResult.originplace.get(n));
         }//todo -
         //num1 = 777;
         //num2 = -99;

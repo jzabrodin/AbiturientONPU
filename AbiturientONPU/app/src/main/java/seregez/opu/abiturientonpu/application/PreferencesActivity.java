@@ -42,14 +42,15 @@ public class PreferencesActivity extends ActionBarActivity implements SharedPref
             e.printStackTrace();
         }
 
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
         if (firstLaunch){
             FirstLaunchDialog firstLaunchDialog =   new FirstLaunchDialog(this);
             firstLaunchDialog.show(getSupportFragmentManager(),"");
-            SharedPreferences   sharedPreferences   = PreferenceManager.getDefaultSharedPreferences(this);
-            sharedPreferences.edit().putString(LAST_UPDATE_DATE_PARAMETER, "30.02.2014 00:42:00").commit();
+            boolean b  = sharedPreferences.edit().putString(LAST_UPDATE_DATE_PARAMETER, "01.01.2014 00:00:00").commit();
         }
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
 
     }
