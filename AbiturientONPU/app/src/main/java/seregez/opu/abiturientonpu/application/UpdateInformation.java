@@ -196,6 +196,7 @@ public class UpdateInformation {
         for (String tag : tags){
 
             if(tag.equals("person") || tag.equals("message")){
+                i++;
                 continue;
             }
 

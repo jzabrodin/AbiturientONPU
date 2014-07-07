@@ -24,7 +24,7 @@ public class ShowResult extends ActionBarActivity {
 
     //Забродин 19-06-2014----------
     //вдруг поменять скажут
-    static int capacity    =   5;
+    static int capacity    =   15;
     //-----------------------------
 
     static ArrayList<String> placeDX       = new ArrayList<String>(capacity);

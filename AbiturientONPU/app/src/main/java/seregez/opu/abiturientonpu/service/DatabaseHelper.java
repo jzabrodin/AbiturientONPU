@@ -20,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
         Log.d(LOG_TAG,sqLiteDatabase.toString());
-        sqLiteDatabase.execSQL("CREATE TABLE abiturient(id integer primary key autoincrement,studId int,fio text,dataObnovleniya text);");
+        sqLiteDatabase.execSQL("CREATE TABLE abiturient(id integer primary key autoincrement,studId text,fio text,dataObnovleniya text);");
 
         sqLiteDatabase.execSQL(
                 "CREATE TABLE news(id integer primary key autoincrement,dataObnovleniya text,message text);"
