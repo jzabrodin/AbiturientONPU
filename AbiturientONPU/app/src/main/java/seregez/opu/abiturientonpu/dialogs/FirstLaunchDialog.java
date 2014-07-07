@@ -4,14 +4,16 @@ package seregez.opu.abiturientonpu.dialogs;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
 import seregez.opu.abiturientonpu.R;
+import seregez.opu.abiturientonpu.application.PreferencesActivity;
 
 
-
-public class FirstLaunchDialog extends DialogFragment{
+public class FirstLaunchDialog extends DialogFragment implements DialogInterface.OnClickListener{
 
     private Activity activity;
 
@@ -19,18 +21,24 @@ public class FirstLaunchDialog extends DialogFragment{
         this.activity = activity;
     }
 
-    public FirstLaunchDialog(Activity activity) {
-        this.activity = activity;
+    public FirstLaunchDialog() {
+        super();
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle("Добро пожаловать! ")
-               .setMessage(R.string.welcome_to_program);
+               .setMessage(R.string.welcome_to_program)
+               .setPositiveButton(R.string.dialog_continue,this);
         return builder.create();
     }
 
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        Intent settings = new Intent(activity.getBaseContext(),PreferencesActivity.class);
+        startActivity(settings);
+    }
 }
 
 

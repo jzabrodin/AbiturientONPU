@@ -17,6 +17,7 @@ import java.text.ParseException;
 import java.util.concurrent.ExecutionException;
 
 import seregez.opu.abiturientonpu.R;
+import seregez.opu.abiturientonpu.dialogs.FirstLaunchDialog;
 import seregez.opu.abiturientonpu.service.DatabaseHelper;
 import seregez.opu.abiturientonpu.service.DateHelper;
 import seregez.opu.abiturientonpu.service.MenuHelper;
@@ -56,10 +57,12 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         lastUpdateDate        = sharedPreferences.getString(PreferencesActivity.LAST_UPDATE_DATE_PARAMETER,"");
 
         if (savedId.length() == 0){
-            Intent settings = new Intent(this,PreferencesActivity.class);
-            settings.putExtra("first_launch", true);
-            startActivity(settings);
-            /*todo придумасть способ обновлять макет после возврата из настроек */
+
+            FirstLaunchDialog firstLaunchDialog = new FirstLaunchDialog();
+            firstLaunchDialog.setActivity(this);
+            firstLaunchDialog.show(getSupportFragmentManager(), "");
+
+
         }
 
 

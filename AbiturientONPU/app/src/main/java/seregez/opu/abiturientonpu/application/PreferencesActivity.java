@@ -2,18 +2,17 @@ package seregez.opu.abiturientonpu.application;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 
-import seregez.opu.abiturientonpu.dialogs.FirstLaunchDialog;
+import seregez.opu.abiturientonpu.R;
 import seregez.opu.abiturientonpu.service.UpdateService;
 
 /**
  * Created by yevgen on 24.06.14.
  */
 
-public class PreferencesActivity extends ActionBarActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
+public class PreferencesActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
 
     public final static String SAVED_ID_PARAMETER         = "pref_savedID";
     public final static String AUTO_UPDATE_PARAMETER      = "pref_autoUpdate";
@@ -28,28 +27,13 @@ public class PreferencesActivity extends ActionBarActivity implements SharedPref
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportFragmentManager().beginTransaction()
-                            .replace(android.R.id.content, new Preferences())
-                            .commit();
+        addPreferencesFromResource(R.xml.preferences);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
-        boolean firstLaunch = false;
-        try {
-            firstLaunch = getIntent().getBooleanExtra("first_launch", false);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setDisplayHomeAsUpEnabled(true);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-        if (firstLaunch){
-            FirstLaunchDialog firstLaunchDialog =   new FirstLaunchDialog(this);
-            firstLaunchDialog.show(getSupportFragmentManager(),"");
-            boolean b  = sharedPreferences.edit().putString(LAST_UPDATE_DATE_PARAMETER, "01.01.2014 00:00:00").commit();
-        }
-
+        boolean b = sharedPreferences.edit().putString(LAST_UPDATE_DATE_PARAMETER, "01.01.2014 00:00:00").commit();
 
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
 
