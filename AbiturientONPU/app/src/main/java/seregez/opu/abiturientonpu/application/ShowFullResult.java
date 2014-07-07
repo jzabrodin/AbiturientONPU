@@ -17,7 +17,6 @@ import android.text.style.TextAppearanceSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-
 import seregez.opu.abiturientonpu.R;
 import seregez.opu.abiturientonpu.service.MenuHelper;
 
@@ -69,6 +68,9 @@ public void onItemClick(AdapterView<?> parent, View view,
  * Created by Admin on 12.05.14.
  */
 public class ShowFullResult extends ActionBarActivity {
+
+    static int n;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
@@ -87,6 +89,8 @@ public class ShowFullResult extends ActionBarActivity {
             startActivity(result);
         }
 
+        update();
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -99,8 +103,13 @@ public class ShowFullResult extends ActionBarActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        int n = intent.getIntExtra("key", 0);
+        n = intent.getIntExtra("key", 0);
         //StringBuilder sb = new StringBuilder();
+
+        update();
+    }
+
+    private void update() {
         SpannableStringBuilder b = new SpannableStringBuilder();
         TextView tv = (TextView) findViewById(R.id.all);
         b.append("Абитуриент: ");
@@ -130,11 +139,11 @@ public class ShowFullResult extends ActionBarActivity {
         String dx;
         String dy;
         if (!ShowResult.placeDX.isEmpty()) {
-
-            num1 = Integer.parseInt(ShowResult.placeDX.get(n));
-                    //- Integer.parseInt(ShowResult.place.get(n));
-            num2 = Integer.parseInt(ShowResult.originplaceDX.get(n));
-                    //- Integer.parseInt(ShowResult.originplace.get(n));
+            //*todo здесь почему-то вылетает массивы placeDX и originplaceDX задаются в классе UpdateInformation
+            num1 = Integer.parseInt(ShowResult.placeDX.get(n));// = 0, всегда
+            //- Integer.parseInt(ShowResult.place.get(n));
+            num2 = Integer.parseInt(ShowResult.originplaceDX.get(n));// = 0, всегда
+            //- Integer.parseInt(ShowResult.originplace.get(n));
         }//todo -
         //num1 = 777;
         //num2 = -99;
@@ -142,59 +151,23 @@ public class ShowFullResult extends ActionBarActivity {
         dy = num2 > 0 ? "+" + num2 : "" + num2;
         Spanned sx = Html.fromHtml("X <small><sub>2</sub></small> ");
         Spanned sy = Html.fromHtml("<sup><small>" + dy + " </small></sup>");
-//"\n\nРейтинг: " + ShowResult.rating.get(n) +
         ss = new SpannableString("Позиция в рейтинге: " + ShowResult.place.get(n) + " " + dx);
         ss.setSpan(new StyleSpan(Typeface.BOLD), 0, "Позиция в рейтинге: ".length(), 0);
         ss.setSpan(new SuperscriptSpan(), ss.length()-dx.length(), ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ss.setSpan(new TextAppearanceSpan(this, R.style.SpecialTextAppearance), ss.length() - dx.length(), ss.length(), 0);
         ss.setSpan(new ForegroundColorSpan(num1 >= 0 ? Color.GREEN : Color.RED), ss.length() - dx.length(), ss.length(), 0);
-                ((TextView) findViewById(R.id.place)).setText(ss);
+        ((TextView) findViewById(R.id.place)).setText(ss);
+
         ss = null;
-        ss = new SpannableString("Позиция по оригиналам: " + ShowResult.place.get(n) + " " + dy);
+        ss = new SpannableString("Позиция по оригиналам: " + ShowResult.originplace.get(n) + " " + dy);
         ss.setSpan(new StyleSpan(Typeface.BOLD), 0, "Позиция по оригиналам: ".length(), 0);
         ss.setSpan(new SuperscriptSpan(), ss.length()-dy.length(), ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ss.setSpan(new TextAppearanceSpan(this, R.style.SpecialTextAppearance), ss.length() - dy.length(), ss.length(), 0);
         ss.setSpan(new ForegroundColorSpan(num1 >= 0 ? Color.GREEN : Color.RED), ss.length() - dy.length(), ss.length(), 0);
         ((TextView) findViewById(R.id.originplace)).setText(ss);
-        //b.append("\n\nПозиция в рейтинге: ");
-        //b.setSpan(new StyleSpan(Typeface.BOLD), b.length() - "Позиция в рейтинге: ".length(), b.length(), 0);
-        //b.append(ShowResult.place.get(n)).append(" ");
-        //tv.setText(b);
-        //b.clear();
-        //b.clearSpans();
 
-        //b.append(dx);
-        //b.setSpan(new SuperscriptSpan(), b.length()-dx.length(), b.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        //b.setSpan(new TextAppearanceSpan(this, R.style.SpecialTextAppearance), b.length()-dx.length(), b.length(), 0);
-        //b.setSpan(new ForegroundColorSpan(num1 >= 0 ? Color.GREEN : Color.RED), b.length()-dx.length(), b.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        //((TextView) findViewById(R.id.placeDX)) .setText("123");
-        //b.clear();
-        //b.clearSpans();
-
-        //b.append("\nПозиция по оригиналам: ");
-        //b.setSpan(new StyleSpan(Typeface.BOLD), b.length() - "Позиция по оригиналам: ".length(), b.length(), 0);
-        //b.append(ShowResult.originplace.get(n)).append(" ");
-        //((TextView) findViewById(R.id.all2)) .setText("\nПозиция по оригиналам: ");
-        //b.clear();
-        //b.clearSpans();
-        //b.append(dy);
-        //b.setSpan(new TextAppearanceSpan(this, R.style.SpecialTextAppearance), b.length()-dy.length(), b.length(), 0);
-        //b.setSpan(new SuperscriptSpan(), b.length()-dy.length(), b.length(), 0);
-        // b.setSpan(new ForegroundColorSpan(num2 >= 0 ? Color.GREEN : Color.RED), b.length()-dy.length(), b.length(), 0);
-        //((TextView) findViewById(R.id.originplaceDX)) .setText("22");
-        //b.clear();
-        //b.clearSpans();
-        //TextView all2 = (TextView) findViewById(R.id.all2);
-        //html
-        //TextView all3 = (TextView) findViewById(R.id.all3);
 
         TextView all3 = (TextView) findViewById(R.id.all3);
-        /*SpannableString sss = new SpannableString("TEST EXAMPLE HAHA");
-        sss.setSpan(new TextAppearanceSpan(this, R.style.SpecialTextAppearance), 6,10, 0);
-        sss.setSpan(new SuperscriptSpan(), 6,10, 0);
-        sss.setSpan(new ForegroundColorSpan(Color.RED), 6, 10, 0);
-        //all3.setText(sss);*/
-
         b.clear();
         b.clearSpans();
         b.append("\nПодано: ");
@@ -209,41 +182,7 @@ public class ShowFullResult extends ActionBarActivity {
             b.append("\n");
         }
         b.append(ShowResult.comment.get(n));
-        //tv.setText(b);
         all3.setText(b);
-
-        //tv.append(sss);
-        //sb.delete(0, sb.length());
-
-        /*TextView tv10 = (TextView) findViewById(R.id.place);
-        tv10.append(ShowResult.place.get(n));
-        TextView tv11 = (TextView) findViewById(R.id.originplace);
-        tv11.append(ShowResult.originplace.get(n));
-        //Вывести разницу в рейтинге, если есть.
-        int num1 = 0;
-        int num2 = 0;
-        if (!ShowResult.placeDX.isEmpty()) {
-            num1 = Integer.parseInt(ShowResult.placeDX.get(n)) - Integer.parseInt(ShowResult.place.get(n));
-            num2 = Integer.parseInt(ShowResult.originplaceDX.get(n)) - Integer.parseInt(ShowResult.originplace.get(n));
-        }//todo -
-        num1 = 777;
-        num2 = -99;
-        if (num1 >= 0)
-            ((TextView) findViewById(R.id.placeDX)).setTextColor(Color.GREEN);
-        else
-            ((TextView) findViewById(R.id.placeDX)).setTextColor(Color.RED);
-        if (num2 >= 0)
-            ((TextView) findViewById(R.id.originplaceDX)).setTextColor(Color.GREEN);
-        else
-            ((TextView) findViewById(R.id.originplaceDX)).setTextColor(Color.RED);
-        TextView tv101 = (TextView) findViewById(R.id.placeDX);
-        tv101.setText(num1 > 0 ? "+" + num1 : "" + num1);
-        TextView tv102 = (TextView) findViewById(R.id.originplaceDX);
-        tv102.setText(num2 > 0 ? "+" + num2 : "" + num2);
-        //}//todo +
-        tv101.setTextSize(12);
-        tv102.setTextSize(12);
-*/
     }
 }
 

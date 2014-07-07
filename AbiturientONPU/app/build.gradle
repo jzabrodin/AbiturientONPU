@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId "seregez.opu.abiturientonpu"
-        minSdkVersion 11
+        minSdkVersion 7
         targetSdkVersion 16
         versionCode 1
         versionName "1.0"

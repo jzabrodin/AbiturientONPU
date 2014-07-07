@@ -68,6 +68,11 @@ public class ShowResult extends ActionBarActivity {
 
         Log.d(TAG,"activity started!");
 
+        update();
+
+    }
+
+    private void update() {
         groupData = new ArrayList<Map<String, String>>();
         childData = new ArrayList<ArrayList<Map<String, String>>>();
         int t1;
@@ -86,7 +91,7 @@ public class ShowResult extends ActionBarActivity {
             }
             m = new HashMap<String, String>();
             m.put("groupName", ShowResult.department.get(i) + " (" + countOfSpecInDep + " " + ( countOfSpecInDep == 1 ? "заявление" : countOfSpecInDep < 5 ?
-            "заявления" : "заявлений") + ")");
+                    "заявления" : "заявлений") + ")");
             groupData.add(m);
             pushToCollection(t1, t);
             t = 1;
@@ -106,8 +111,8 @@ public class ShowResult extends ActionBarActivity {
                 R.layout.activity_results_row,
                 childFrom,
                 childTo));
-        exList.expandGroup(0);
-        exList.expandGroup(1);
+        //exList.expandGroup(0);
+        //exList.expandGroup(1);
         //exList.expandGroup(2);
         exList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
