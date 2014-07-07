@@ -56,20 +56,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         savedId               = sharedPreferences.getString(PreferencesActivity.SAVED_ID_PARAMETER        ,"");
         lastUpdateDate        = sharedPreferences.getString(PreferencesActivity.LAST_UPDATE_DATE_PARAMETER,"");
 
-        if (savedId.length() == 0){
-
-            FirstLaunchDialog firstLaunchDialog = new FirstLaunchDialog();
-            firstLaunchDialog.setActivity(this);
-            firstLaunchDialog.show(getSupportFragmentManager(), "");
-
-
-        }
-
-
-
-        TextView savedIdTV        = (TextView) findViewById(R.id.pref_savedID);
+        TextView savedIdTV = (TextView) findViewById(R.id.pref_savedID);
         TextView lastUpdateDateTV = (TextView) findViewById(R.id.pref_lastUpdateDate);
-        TextView pref_autoUpdate  = (TextView) findViewById(R.id.pref_autoUpdate);
+        TextView pref_autoUpdate = (TextView) findViewById(R.id.pref_autoUpdate);
 
 
         refreshParameters(savedIdTV, lastUpdateDateTV, pref_autoUpdate);
@@ -84,6 +73,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         dbHelper = new DatabaseHelper(this);
 
         checkConnectionAndServerDate();
+
 
     }
 
@@ -101,12 +91,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         savedId               = sharedPreferences.getString(PreferencesActivity.SAVED_ID_PARAMETER        ,"");
         lastUpdateDate        = sharedPreferences.getString(PreferencesActivity.LAST_UPDATE_DATE_PARAMETER,"");
 
-        if (savedId.length() == 0){
-            Intent settings = new Intent(this,PreferencesActivity.class);
-            settings.putExtra("first_launch", true);
-            startActivity(settings);
-            /*todo придумасть способ обновлять макет после возврата из настроек */
-        }
+        checkThisIsFirstLaunch();
 
         TextView savedIdTV        = (TextView) findViewById(R.id.pref_savedID);
         TextView lastUpdateDateTV = (TextView) findViewById(R.id.pref_lastUpdateDate);
@@ -114,6 +99,18 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
 
         refreshParameters(savedIdTV, lastUpdateDateTV, pref_autoUpdate);
+    }
+
+    private void checkThisIsFirstLaunch() {
+
+        if (savedId.length() == 0){
+
+            FirstLaunchDialog firstLaunchDialog = new FirstLaunchDialog();
+            firstLaunchDialog.setActivity(this);
+            firstLaunchDialog.show(getSupportFragmentManager(), "");
+
+        }
+
     }
 
     private void checkConnectionAndServerDate() {

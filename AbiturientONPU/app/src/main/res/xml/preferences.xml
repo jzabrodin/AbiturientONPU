@@ -30,13 +30,17 @@
         android:key="pref_lastUpdateDate"
         android:editable="false"
         android:visibility="invisible"
-        android:selectable="false"/>
+        android:selectable="false"
+        android:cursorVisible="false"
+        android:keepScreenOn="false"/>
 
     <EditTextPreference
         android:key="pref_prevUpdateDate"
         android:editable="false"
         android:visibility="invisible"
-        android:selectable="false"/>
+        android:selectable="false"
+        android:cursorVisible="false"
+        android:keepScreenOn="false"/>
 
 
 </PreferenceScreen>
