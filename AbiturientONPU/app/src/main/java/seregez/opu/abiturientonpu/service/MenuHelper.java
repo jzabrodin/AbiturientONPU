@@ -71,23 +71,26 @@ public class MenuHelper {
         MyRunnable  myRunnable          = new MyRunnable(UPDATE_DATE_URL,true);
         String      serverDate          = myRunnable.execute().get();
 
-        if (serverDate.equals(lastUpdateDate)){
-            Toast.makeText(context,"Нет обновлений!", Toast.LENGTH_SHORT);
-        } else {
+            if (serverDate == null){
+
+            Toast.makeText(context,"Нет подключения!", Toast.LENGTH_SHORT).show();
+
+        }   else if (serverDate.equals(lastUpdateDate)){
+
+            Toast.makeText(context,"Нет обновлений!", Toast.LENGTH_SHORT).show();
+
+        }   else {
 
             WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
             boolean wifi = wifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLED;
 
-            if (wifi && onlyWifiMode && serverDate != null) {
+            if (wifi && onlyWifiMode && serverDate.length()>0) {
+
                 updateDatabase(context, serverDate);
 
             } else if (!wifi && onlyWifiMode && serverDate != null) {
 
                 showToast(context, "Используем только Wi-Fi подключение, включите Wi-Fi и повторите попытку.");
-
-            } else if (serverDate == null) {
-
-                showToast(context, "Нет подключения к сети!");
 
             } else {
                 updateDatabase(context, serverDate);
@@ -103,7 +106,6 @@ public class MenuHelper {
         if (flag) {
             showToast(context,"Нет обновлений :( ");
         } else {
-            showToast(context,"Подключение установлено!");
             ShowResult.updateArrays();
             UpdateInformation upd   =   new UpdateInformation(flag);
             upd.updateData(context);

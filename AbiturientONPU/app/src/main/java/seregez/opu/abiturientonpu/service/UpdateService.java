@@ -66,7 +66,7 @@ public class UpdateService extends IntentService {
                                                 .setTicker("Доступно обновление")
                                                 .setSmallIcon(R.drawable.ic_launcher)
                                                 .setContentTitle("Абитуриент ОНПУ")
-                                                .setContentText("Обновление, сэр!")
+                                                .setContentText(getResources().getString(R.string.notification_text))
                                                 .setContentIntent(pi)
                                                 .setAutoCancel(true)
                                                 .build();

@@ -68,7 +68,8 @@
     <string name="enterIdLabel"              >Личное дело    </string>
     <string name="enterIdPreference"         >Номер личного дела    </string>
     <string name="title_activity_preferences">Настройки</string>
-    <string name="welcome_to_program"        >Для дальнейшего использования необходимо заполнить настройки, обязательным является номер личного дела.</string>
+    <string name="welcome_to_program"        >Для просмотра поданных заявлений в настройках введите номер личного дела .</string>
     <string name="dialog_continue"           >Продолжить</string>
+    <string name="notification_text">Данные обновлены!</string>
 
 </resources>
