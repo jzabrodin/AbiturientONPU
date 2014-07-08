@@ -130,7 +130,6 @@ public class ShowFullResult extends ActionBarActivity {
         b.append("\n\nРейтинг: ");
         b.setSpan(new StyleSpan(Typeface.BOLD), b.length() - " Рейтинг:".length(), b.length(), 0);
         b.append(ShowResult.rating.get(n));
-        b.setSpan(new SuperscriptSpan(), b.length() - ShowResult.rating.get(n).length(), b.length(), 0);
         tv.setText(b);
 
         SpannableString ss;
